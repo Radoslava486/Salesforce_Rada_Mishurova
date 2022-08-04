@@ -16,7 +16,7 @@ public class BaseTest {
     protected LoginPage loginPage;
     protected HomePage homePage;
     protected LeadsPage leadsPage;
-    protected NewLeadPage newLeadPage;
+    protected NewLeadModal newLeadPage;
     protected AccountsPage accountsPage;
     protected NewAccountPage newAccountPage;
 
@@ -32,7 +32,7 @@ public class BaseTest {
         homePage = new HomePage(driver);
         leadsPage = new LeadsPage(driver);
         accountsPage = new AccountsPage(driver);
-        newLeadPage = new NewLeadPage(driver);
+        newLeadPage = new NewLeadModal(driver);
         newAccountPage = new NewAccountPage(driver);
     }
 

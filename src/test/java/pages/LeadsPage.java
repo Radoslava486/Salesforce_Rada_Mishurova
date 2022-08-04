@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 
-public class LeadsPage extends BasePage {
+public class LeadsPage extends BaseEntityPage {
 
     private final static By NEW_BUTTON = By.cssSelector("div.active a[title=New]");
     private final static By ICON_LOCATOR = By.cssSelector("//img[@title='Leads']/parent::div");
@@ -13,10 +13,6 @@ public class LeadsPage extends BasePage {
         super(driver);
     }
 
-    @Override
-    public void waitForPageLoaded() {
-        waitForElementDisplayed(ICON_LOCATOR);
-    }
 
 
     public void clickNewButton() {
