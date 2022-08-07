@@ -188,7 +188,7 @@ public class Lead {
             this.fullName = fullName;
             return this;
         }
-        public LeadBuilder lastName (String laststName) {
+        public LeadBuilder lastName (String lastName) {
             this.lastName = lastName;
             return this;
         }

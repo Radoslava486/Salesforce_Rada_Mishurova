@@ -13,7 +13,9 @@ import pages.NewLeadModal;
 import static enums.Industry.CHEMICALS;
 import static enums.LeadSource.ADVERTISEMENT;
 import static enums.LeadStatus.NEW;
+import static enums.LeadStatus.WORKING;
 import static enums.Rating.HOT;
+import static enums.Rating.WARM;
 import static enums.Salutation.MR;
 import static enums.Salutation.MS;
 
@@ -30,7 +32,7 @@ public class LeadsTest extends BaseTest {
     }
 
     @Test(dataProvider = "newLeadData")
-    public void createLeadTest(String firstName, String lastName, String company, Salutation salutation, String title, String email, String phone, LeadStatus leadStatus, Rating rating, String street, String city, String state, String country, String website, String zipcode, String numberOfEmployees, String annualRevenue, LeadSource leadSource, Industry industry, String description) {
+    public void createLeadTest(Lead testLead) {
         loginPage.setUserName(USERNAME);
         loginPage.setPassword(PASSWORD);
         loginPage.clickLoginButton();
@@ -38,16 +40,11 @@ public class LeadsTest extends BaseTest {
         homePage.openLeadsTab();
         leadsPage.waitForPageLoaded();
         leadsPage.clickNewButton();
-
-
-       Lead testLead = new Lead.LeadBuilder(firstName, leadStatus)
-                .build();
         newLeadModal.fillForm(testLead);
         newLeadModal.clickSaveButton();
         homePage.waitForLeadAlertLoaded();
-        String actualAlertMessage = homePage.getAlertNewLeadMessage();
-        String expectedAlertMessage = String.format("success\nLead \"%s\" was created.\nClose",
-                lastName);
+       String actualAlertMessage = homePage.getAlertNewLeadMessage();
+       String expectedAlertMessage = String.format("success\nLead \"%s\" was created.\nClose");
         Assert.assertEquals(actualAlertMessage, expectedAlertMessage);
         Assert.assertEquals(leadDetailsPage.getLeadInfo(), testLead);
     }
@@ -55,8 +52,24 @@ public class LeadsTest extends BaseTest {
     @DataProvider(name = "newLeadData")
     public Object[][] newLeadTestData() {
         return new Object[][]{
-                {"Radoslava", "Mishurova", "Lebyazhiy", MS, "DFGH", "mishurova486", "34856126", NEW, HOT, "Skrypnikova", "Minsk", "Minsk", "Belarus", "None", "4586256", "3", "520", ADVERTISEMENT, CHEMICALS, " "},
-                {"DMITRIY", "IVANOV", "LG", MR, "DFGH", "mishurova486", "34856126", NEW, HOT, "Skrypnikova", "Minsk", "Minsk", "Belarus", "None", "4586256", "17", "520", ADVERTISEMENT, CHEMICALS, " "},
+                {
+                    new Lead.LeadBuilder("neft", NEW).lastName("Mishurova").firstName("Rada").
+                                salutation(MS).email("mishurova486").zipcode("34856126").rating(HOT).title("")
+                                .street("Skrypnikova").city("Minsk").state("Minsk").country("Belarus")
+                                .website("None").phone("4586256").numberOfEmployees("3").annualRevenue("520")
+                                .leadSource(ADVERTISEMENT).industry(CHEMICALS).description(" ").build()
+                },
+
+                {
+                        new Lead.LeadBuilder("Mila", WORKING).lastName("Ivanov").firstName("Alexey").
+                                salutation(MR).email("mishurova486").zipcode("1111").rating(WARM).title("")
+                                .street("Ratomskaya").city("Minsk").state("Minsk").country("Belarus")
+                                .website("None").phone("452636").numberOfEmployees("33").annualRevenue("520")
+                                .leadSource(ADVERTISEMENT).industry(CHEMICALS).description(" ").build()
+                }
+
+
         };
     }
+
 }

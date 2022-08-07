@@ -1,6 +1,7 @@
 package pages;
 
 
+import enums.Rating;
 import models.Lead;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -24,6 +25,13 @@ public class NewLeadModal extends BaseModal {
 
 
     public void fillForm(Lead inputLead) {
+
+        new LightningCombobox(driver, "Rating").selectByVisibleText((inputLead.getRating().getName()));
+        new LightningCombobox(driver, "Industry").selectByVisibleText((inputLead.getIndustry().getName()));
+        new LightningCombobox(driver, "Lead Status").selectByVisibleText((inputLead.getLeadStatus().getName()));
+        new LightningCombobox(driver, "Lead Source").selectByVisibleText((inputLead.getLeadSource().getName()));
+        new LightningCombobox(driver, "Salutation").selectByVisibleText((inputLead.getSalutation().getName()));
+
         new LightningInput(driver, "First Name").setValue(inputLead.getFirstName());
         new LightningInput(driver, "Last Name").setValue(inputLead.getLastName());
         new LightningInput(driver, "Company").setValue(inputLead.getCompany());
@@ -44,12 +52,7 @@ public class NewLeadModal extends BaseModal {
 
 
 
-        //что должно быть здесь
-        new LightningCombobox(driver, "Rating").selectByVisibleText(inputLead.getRating());
-        new LightningCombobox(driver, "Industry").selectByVisibleText(inputLead.getIndustry());
-        new LightningCombobox(driver, "Lead Status").selectByVisibleText(inputLead.getLeadStatus());
-        new LightningCombobox(driver, "Lead Source").selectByVisibleText("Advertisement");
-        new LightningCombobox(driver, "Salutation").selectByVisibleText("Mr.");
+
 
     }
 }

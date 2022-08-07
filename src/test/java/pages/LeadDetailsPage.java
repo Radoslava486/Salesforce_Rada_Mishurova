@@ -9,7 +9,6 @@ import wrappers.LightningFormattedElement;
 
 public class LeadDetailsPage extends BasePage {
 
-    protected WebDriver driver;
     private final static By ICON_LOCATOR = By.cssSelector("//img[@title='Leads']/parent::div");
     public LeadDetailsPage(WebDriver driver) {
         super(driver);

@@ -20,6 +20,7 @@ public class LightningInput extends BaseWrapper{
         if(Objects.nonNull(value)){
             scrollIntoView(inputElement);
             System.out.printf("Setting %s input value = %s", label, value);
+            System.out.println();
             inputElement.sendKeys(value);
         }
     }

@@ -20,6 +20,7 @@ public class TextArea extends BaseWrapper {
         if (Objects.nonNull(value)) {
             scrollIntoView(textareaElement);
             System.out.printf("Setting %s input value = %s", label, value);
+            System.out.println();
             textareaElement.sendKeys(value);
 
         }
