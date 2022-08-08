@@ -43,8 +43,9 @@ public class LeadsTest extends BaseTest {
         newLeadModal.fillForm(testLead);
         newLeadModal.clickSaveButton();
         homePage.waitForLeadAlertLoaded();
-       String actualAlertMessage = homePage.getAlertNewLeadMessage();
-       String expectedAlertMessage = String.format("success\nLead \"%s\" was created.\nClose");
+        String actualAlertMessage = homePage.getAlertNewLeadMessage();
+        String expectedAlertMessage = String.format("success\nLead \"%s\" was created.\nClose",
+              leadDetailsPage.getFullName());
         Assert.assertEquals(actualAlertMessage, expectedAlertMessage);
         Assert.assertEquals(leadDetailsPage.getLeadInfo(), testLead);
     }
@@ -54,7 +55,7 @@ public class LeadsTest extends BaseTest {
         return new Object[][]{
                 {
                     new Lead.LeadBuilder("neft", NEW).lastName("Mishurova").firstName("Rada").
-                                salutation(MS).email("mishurova486").zipcode("34856126").rating(HOT).title("")
+                                salutation(MS).email("mishurova486@gmail.com").zipcode("34856126").rating(HOT).title("")
                                 .street("Skrypnikova").city("Minsk").state("Minsk").country("Belarus")
                                 .website("None").phone("4586256").numberOfEmployees("3").annualRevenue("520")
                                 .leadSource(ADVERTISEMENT).industry(CHEMICALS).description(" ").build()
@@ -62,7 +63,7 @@ public class LeadsTest extends BaseTest {
 
                 {
                         new Lead.LeadBuilder("Mila", WORKING).lastName("Ivanov").firstName("Alexey").
-                                salutation(MR).email("mishurova486").zipcode("1111").rating(WARM).title("")
+                                salutation(MR).email("mishurova486@gmail.com").zipcode("1111").rating(WARM).title("")
                                 .street("Ratomskaya").city("Minsk").state("Minsk").country("Belarus")
                                 .website("None").phone("452636").numberOfEmployees("33").annualRevenue("520")
                                 .leadSource(ADVERTISEMENT).industry(CHEMICALS).description(" ").build()

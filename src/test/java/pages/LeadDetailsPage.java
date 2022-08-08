@@ -19,22 +19,35 @@ public class LeadDetailsPage extends BasePage {
         waitForElementDisplayed(ICON_LOCATOR);
     }
 
+    public String getFullName() {
+        String fullName = new LightningFormattedElement(driver, "Name").getText();
+        return fullName;
+    }
+
+
     public Lead getLeadInfo() {
         String fullName = new LightningFormattedElement(driver, "Name").getText();
         String company = new LightningFormattedElement(driver, "Company").getText();
         String phone = new LightningFormattedElement(driver, "Phone").getText();
         String email = new LightningFormattedElement(driver, "Email").getText();
         String rating = new LightningFormattedElement(driver, "Rating").getText();
+
+
+        String address = new LightningFormattedElement(driver, "Address").getText();
+        
+        String street = new LightningFormattedElement(driver, "Street").getText();
         String city = new LightningFormattedElement(driver, "City").getText();
         String state = new LightningFormattedElement(driver, "State/Province").getText();
-        String country = new LightningFormattedElement(driver, "Country").getText();
         String zipcode = new LightningFormattedElement(driver, "Zip/Postal Code").getText();
+        String country = new LightningFormattedElement(driver, "Country").getText();
+
+
+
         String annualRevenue = new LightningFormattedElement(driver, "Annual Revenue").getText();
         String numberOfEmployees = new LightningFormattedElement(driver, "No. of Employees").getText();
         String leadSource = new LightningFormattedElement(driver, "Lead Source").getText();
         String industry = new LightningFormattedElement(driver, "Industry").getText();
         String description = new LightningFormattedElement(driver, "Description").getText();
-        String street = new LightningFormattedElement(driver, "Street").getText();
         String website = new LightningFormattedElement(driver, "Website").getText();
         String title = new LightningFormattedElement(driver, "Title").getText();
         String leadStatus = new LightningFormattedElement(driver, "Lead Status").getText();
@@ -42,7 +55,7 @@ public class LeadDetailsPage extends BasePage {
 
         return new Lead.LeadBuilder(
                 company,
-                LeadStatus.NEW)
+                LeadStatus.fromString(leadStatus))
                 .fullName(fullName)
                 .rating(Rating.fromString(rating))
                 .email(email).phone(phone).city(city).annualRevenue(annualRevenue)
@@ -54,11 +67,6 @@ public class LeadDetailsPage extends BasePage {
                 .salutation(Salutation.fromString(salutation))
                 .leadSource(LeadSource.fromString(leadSource))
                 .build();
-
-
-
-
-
 
     }
 }

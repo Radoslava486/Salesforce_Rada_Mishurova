@@ -54,7 +54,7 @@ public class Lead {
         this.fullName = leadBuilder.fullName;
     }
 
-    public String getFullName() {return fullName;}
+
     public String getFirstName() {
         return firstName;
     }
@@ -265,6 +265,7 @@ public class Lead {
             this.leadSource = leadSource;
             return this;
         }
+
         public String getFullName() {
             if (this.fullName != null) {
                 return this.fullName;

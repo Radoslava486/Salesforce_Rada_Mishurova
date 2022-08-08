@@ -18,7 +18,7 @@ public class BaseTest {
     protected LeadsPage leadsPage;
     protected NewLeadModal newLeadPage;
     protected AccountsPage accountsPage;
-    protected NewAccountPage newAccountPage;
+    protected NewAccountModal newAccountModal;
 
     @BeforeClass(alwaysRun = true)
     public void setUp(ITestContext testContext) throws Exception {
@@ -33,7 +33,7 @@ public class BaseTest {
         leadsPage = new LeadsPage(driver);
         accountsPage = new AccountsPage(driver);
         newLeadPage = new NewLeadModal(driver);
-        newAccountPage = new NewAccountPage(driver);
+        newAccountModal = new NewAccountModal(driver);
     }
 
     @BeforeMethod(alwaysRun = true)

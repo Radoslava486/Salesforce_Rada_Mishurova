@@ -3,7 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class AccountsPage extends BasePage {
+public class AccountsPage extends BaseEntityPage {
 
     private static final By NEW_BUTTON = By.cssSelector("div.active a[title=New]");
 
@@ -11,12 +11,9 @@ public class AccountsPage extends BasePage {
         super(driver);
     }
 
-    @Override
-    public void waitForPageLoaded() {
-        waitForElementDisplayed(NEW_BUTTON);
-    }
-
     public void clickNewButton() {
         driver.findElement(NEW_BUTTON).click();
     }
+
+
 }
