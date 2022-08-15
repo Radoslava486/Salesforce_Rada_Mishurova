@@ -15,9 +15,9 @@ public class InputWithSearch extends BaseWrapper {
         super(driver, label);
     }
 
-    public void setValue(String value){
+    public void setValue(String value) {
         WebElement inputElement = driver.findElement(By.xpath(String.format(INPUT_LOCATOR, label)));
-        if(Objects.nonNull(value)){
+        if (Objects.nonNull(value)) {
             scrollIntoView(inputElement);
             System.out.printf("Setting %s input value = %s", label, value);
             System.out.println();

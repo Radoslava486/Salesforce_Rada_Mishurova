@@ -19,8 +19,7 @@ public class TextArea extends BaseWrapper {
         WebElement textareaElement = driver.findElement(By.xpath(String.format(TEXTAREA_LOCATOR, label)));
         if (Objects.nonNull(value)) {
             scrollIntoView(textareaElement);
-            System.out.printf("Setting %s input value = %s", label, value);
-            System.out.println();
+            System.out.printf("Setting %s input value = %s ", label, value);
             textareaElement.sendKeys(value);
 
         }

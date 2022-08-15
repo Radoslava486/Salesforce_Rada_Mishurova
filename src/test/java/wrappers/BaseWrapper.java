@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 public class BaseWrapper {
     protected WebDriver driver;
     String label;
+
     public BaseWrapper(WebDriver driver, String label) {
         this.driver = driver;
         this.label = label;

@@ -40,10 +40,6 @@ public enum Industry {
         this.name = name;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public static Industry fromString(String value) {
         for (Industry contactIndustry : Industry.values()) {
             if (contactIndustry.getName().equals(value)) {
@@ -51,5 +47,9 @@ public enum Industry {
             }
         }
         return null;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

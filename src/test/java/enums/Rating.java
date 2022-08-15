@@ -9,10 +9,6 @@ public enum Rating {
         this.name = name;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
     public static Rating fromString(String value) {
         for (Rating contactRating : Rating.values()) {
             if (contactRating.getName().equals(value)) {
@@ -21,6 +17,11 @@ public enum Rating {
         }
         return null;
     }
+
+    public String getName() {
+        return this.name;
+    }
 }
+
 
 

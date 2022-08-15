@@ -2,21 +2,16 @@ package tests;
 
 import enums.AccountType;
 import models.Account;
-import models.Lead;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import pages.*;
+import pages.AccountDetailsPage;
+import pages.AccountsPage;
+import pages.NewAccountModal;
 
 import static enums.Industry.CHEMICALS;
-import static enums.LeadSource.ADVERTISEMENT;
-import static enums.LeadStatus.NEW;
-import static enums.LeadStatus.WORKING;
-import static enums.Rating.HOT;
-import static enums.Rating.WARM;
-import static enums.Salutation.MR;
-import static enums.Salutation.MS;
 
 public class AccountsTest extends BaseTest {
     private AccountsPage accountsPage;
@@ -28,6 +23,12 @@ public class AccountsTest extends BaseTest {
         accountsPage = new AccountsPage(driver);
         newAccountModal = new NewAccountModal(driver);
         accountDetailsPage = new AccountDetailsPage(driver);
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void logout() {
+        accountDetailsPage.logout();
+        loginPage.waitForPageLoaded();
     }
 
     @Test(dataProvider = "newAccountData")
@@ -53,13 +54,28 @@ public class AccountsTest extends BaseTest {
     public Object[][] newAccountTestData() {
         return new Object[][]{
                 {
-                        new Account.AccountBuilder("Sasha Bely").accountType(AccountType.ANALYST)
+                        Account.builder().accountName("Sasha Bely").type(AccountType.ANALYST)
                                 .annualRevenue("5689").employees("5")
-                                .description("hUGE")
                                 .fax("78965236896")
                                 .phone("889662148")
                                 .industry(CHEMICALS)
-                                .description(" ")
+                                .website("none")
+                                .description("some description")
+                                .billingCity("Minsk")
+                                .billingCountry("Belarus")
+                                .billingStreet("ghf")
+                                .billingZipPostalCode("564789")
+                                .billingStateProvince("Minsk")
+                                .shippingCity("Minsk")
+                                .shippingCountry("Sweden")
+                                .shippingStreet("5th Avenue")
+                                .shippingZipPostalCode("456789")
+                                .shippingStateProvince("London")
+                                .build()
+                },
+
+                {
+                        Account.builder().accountName("Ivan Ivanov")
                                 .build()
                 }
 

@@ -1,34 +1,33 @@
 package tests;
 
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import io.qameta.allure.Attachment;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import utils.AllureUtils;
 
-import java.io.File;
-
+@Log4j2
 
 public class TestListener implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
         ITestListener.super.onTestStart(result);
-        System.out.println("Test " + result.getName() + " started");
+        log.debug(String.format("Test %s started", result.getName()));
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
         ITestListener.super.onTestSuccess(result);
-        System.out.println("Test " + result.getName() + " finished");
+        log.debug(String.format("Test %s passed", result.getName()));
     }
 
     @Override
+    @Attachment(value = "screenshot", type = "image/png")
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
-        System.out.println("Test " + result.getName() + " failed");
+        log.debug(String.format("Test %s failed", result.getName()));
         WebDriver driver = (WebDriver) result.getTestContext().getAttribute("driver");
-        File file = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        String screenshotBase64 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
-        ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        AllureUtils.attachScreenshot(driver);
     }
 }

@@ -1,8 +1,11 @@
 package tests;
 
-import enums.*;
+
+import enums.LeadSource;
+import lombok.extern.log4j.Log4j2;
 import models.Lead;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -12,12 +15,14 @@ import pages.NewLeadModal;
 
 import static enums.Industry.CHEMICALS;
 import static enums.LeadSource.ADVERTISEMENT;
-import static enums.LeadStatus.NEW;
-import static enums.LeadStatus.WORKING;
+import static enums.LeadSource.WEB;
+import static enums.LeadStatus.*;
 import static enums.Rating.HOT;
 import static enums.Rating.WARM;
 import static enums.Salutation.MR;
 import static enums.Salutation.MS;
+
+@Log4j2
 
 public class LeadsTest extends BaseTest {
     private LeadsPage leadsPage;
@@ -31,6 +36,12 @@ public class LeadsTest extends BaseTest {
         leadDetailsPage = new LeadDetailsPage(driver);
     }
 
+    @AfterMethod(alwaysRun = true)
+    public void logout() {
+        leadDetailsPage.logout();
+        loginPage.waitForPageLoaded();
+    }
+
     @Test(dataProvider = "newLeadData")
     public void createLeadTest(Lead testLead) {
         loginPage.setUserName(USERNAME);
@@ -40,12 +51,13 @@ public class LeadsTest extends BaseTest {
         homePage.openLeadsTab();
         leadsPage.waitForPageLoaded();
         leadsPage.clickNewButton();
+        newLeadModal.waitForPageLoaded();
         newLeadModal.fillForm(testLead);
         newLeadModal.clickSaveButton();
         homePage.waitForLeadAlertLoaded();
         String actualAlertMessage = homePage.getAlertNewLeadMessage();
         String expectedAlertMessage = String.format("success\nLead \"%s\" was created.\nClose",
-              leadDetailsPage.getFullName());
+                leadDetailsPage.getFullName());
         Assert.assertEquals(actualAlertMessage, expectedAlertMessage);
         Assert.assertEquals(leadDetailsPage.getLeadInfo(), testLead);
     }
@@ -53,24 +65,29 @@ public class LeadsTest extends BaseTest {
     @DataProvider(name = "newLeadData")
     public Object[][] newLeadTestData() {
         return new Object[][]{
+
                 {
-                    new Lead.LeadBuilder("neft", NEW).lastName("Mishurova").firstName("Rada").
-                                salutation(MS).email("mishurova486@gmail.com").zipcode("34856126").rating(HOT).title("")
-                                .street("Skrypnikova").city("Minsk").state("Minsk").country("Belarus")
+                        Lead.builder().company("neft").leadStatus(NEW).lastName("Mishurova").firstName("Rada")
+                                .salutation(MS).email("mishurova486@gmail.com").zipcode("34856126").rating(HOT)
+                                .title("Manager").street("Skrypnikova").city("Minsk").state("Minsk").country("Belarus")
                                 .website("None").phone("4586256").numberOfEmployees("3").annualRevenue("520")
-                                .leadSource(ADVERTISEMENT).industry(CHEMICALS).description(" ").build()
+                                .leadSource(WEB).industry(CHEMICALS).description("some description").build()
                 },
 
                 {
-                        new Lead.LeadBuilder("Mila", WORKING).lastName("Ivanov").firstName("Alexey").
-                                salutation(MR).email("mishurova486@gmail.com").zipcode("1111").rating(WARM).title("")
+                        Lead.builder().company("qwe").leadStatus(WORKING).lastName("Alexeev").
+                                salutation(MR).email("mishurova486@gmail.com").zipcode("1111").rating(WARM)
                                 .street("Ratomskaya").city("Minsk").state("Minsk").country("Belarus")
-                                .website("None").phone("452636").numberOfEmployees("33").annualRevenue("520")
-                                .leadSource(ADVERTISEMENT).industry(CHEMICALS).description(" ").build()
+                                .leadSource(ADVERTISEMENT).industry(CHEMICALS).build()
+                },
+
+
+                {
+                        Lead.builder().company("MC").lastName("Ivanov").leadStatus(QUALIFIED).leadSource(LeadSource.SOCIAL)
+                                .build()
+
+
                 }
-
-
         };
     }
-
 }

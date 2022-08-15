@@ -10,15 +10,16 @@ import java.util.concurrent.TimeUnit;
 
 @Listeners(TestListener.class)
 public class BaseTest {
-    protected final static String USERNAME = "mishurova486-va3l@force.com";
-    protected final static String PASSWORD = "94rovode";
+    protected final static String USERNAME = "mishurova85-myl7@force.com";
+    protected final static String PASSWORD = "b12345678";
     protected WebDriver driver;
     protected LoginPage loginPage;
     protected HomePage homePage;
     protected LeadsPage leadsPage;
-    protected NewLeadModal newLeadPage;
+    protected NewLeadModal newLeadModal;
     protected AccountsPage accountsPage;
     protected NewAccountModal newAccountModal;
+    protected LeadDetailsPage leadDetailsPage;
 
     @BeforeClass(alwaysRun = true)
     public void setUp(ITestContext testContext) throws Exception {
@@ -32,8 +33,10 @@ public class BaseTest {
         homePage = new HomePage(driver);
         leadsPage = new LeadsPage(driver);
         accountsPage = new AccountsPage(driver);
-        newLeadPage = new NewLeadModal(driver);
         newAccountModal = new NewAccountModal(driver);
+        leadsPage = new LeadsPage(driver);
+        newLeadModal = new NewLeadModal(driver);
+        leadDetailsPage = new LeadDetailsPage(driver);
     }
 
     @BeforeMethod(alwaysRun = true)

@@ -1,13 +1,15 @@
 package pages;
 
 
-import enums.Rating;
+import lombok.extern.log4j.Log4j2;
 import models.Lead;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import wrappers.LightningCombobox;
 import wrappers.LightningInput;
 import wrappers.TextArea;
+
+@Log4j2
 
 public class NewLeadModal extends BaseModal {
 
@@ -20,17 +22,30 @@ public class NewLeadModal extends BaseModal {
 
     @Override
     public void waitForPageLoaded() {
+        log.info("Waiting for New account modal loaded");
         waitForElementDisplayed(saveLeadButtonLocator);
     }
 
 
     public void fillForm(Lead inputLead) {
+        log.info(String.format("Creating new lead with name %s", inputLead.getFullName()));
 
-        new LightningCombobox(driver, "Rating").selectByVisibleText((inputLead.getRating().getName()));
-        new LightningCombobox(driver, "Industry").selectByVisibleText((inputLead.getIndustry().getName()));
-        new LightningCombobox(driver, "Lead Status").selectByVisibleText((inputLead.getLeadStatus().getName()));
-        new LightningCombobox(driver, "Lead Source").selectByVisibleText((inputLead.getLeadSource().getName()));
-        new LightningCombobox(driver, "Salutation").selectByVisibleText((inputLead.getSalutation().getName()));
+        if (inputLead.getRating() != null) {
+            new LightningCombobox(driver, "Rating").selectByVisibleText((inputLead.getRating().getName()));
+        }
+        if (inputLead.getIndustry() != null) {
+            new LightningCombobox(driver, "Industry").selectByVisibleText((inputLead.getIndustry().getName()));
+        }
+        if (inputLead.getLeadStatus() != null) {
+            new LightningCombobox(driver, "Lead Status").selectByVisibleText((inputLead.getLeadStatus().getName()));
+        }
+        if (inputLead.getLeadSource() != null) {
+            new LightningCombobox(driver, "Lead Source").selectByVisibleText((inputLead.getLeadSource().getName()));
+        }
+
+        if (inputLead.getSalutation() != null) {
+            new LightningCombobox(driver, "Salutation").selectByVisibleText((inputLead.getSalutation().getName()));
+        }
 
         new LightningInput(driver, "First Name").setValue(inputLead.getFirstName());
         new LightningInput(driver, "Last Name").setValue(inputLead.getLastName());
@@ -49,9 +64,6 @@ public class NewLeadModal extends BaseModal {
         new LightningInput(driver, "Website").setValue(inputLead.getWebsite());
         new LightningInput(driver, "No. of Employees").setValue(inputLead.getNumberOfEmployees());
         new LightningInput(driver, "Annual Revenue").setValue(inputLead.getAnnualRevenue());
-
-
-
 
 
     }
