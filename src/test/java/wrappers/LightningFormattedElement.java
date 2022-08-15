@@ -1,8 +1,14 @@
 package wrappers;
 
 
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.Objects;
+
+@Log4j2
 
 
 public class LightningFormattedElement extends BaseWrapper {
@@ -14,7 +20,10 @@ public class LightningFormattedElement extends BaseWrapper {
     }
 
     public String getText() {
-        return driver.findElement(By.xpath(String.format(visibleTextLocator, label))).getText();
+        log.debug(String.format("Getting %s value", label));
+        WebElement outputElement = driver.findElement(By.xpath(String.format(visibleTextLocator, label)));
+        scrollIntoView(outputElement);
+        return outputElement.getText();
     }
 }
 

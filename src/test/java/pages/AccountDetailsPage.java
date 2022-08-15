@@ -32,7 +32,7 @@ public class AccountDetailsPage extends HomePage {
 
     public Account getAccountInfo() {
         log.info(String.format("Getting %s lead info", getAccountName()));
-        String accountName = new LightningFormattedElement(driver, "Account Name").getText();
+        String accountName = getAccountName();
         Account.AccountBuilder accountBuilder = Account.builder().accountName(accountName);
 
         String phone = new LightningFormattedElement(driver, "Phone").getText();

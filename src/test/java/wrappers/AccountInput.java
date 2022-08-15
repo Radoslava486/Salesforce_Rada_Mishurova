@@ -1,10 +1,12 @@
 package wrappers;
 
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.Objects;
+@Log4j2
 
 public class AccountInput extends BaseWrapper {
 
@@ -17,11 +19,10 @@ public class AccountInput extends BaseWrapper {
     }
 
     public void setValue(String value) {
+        log.debug(String.format("Setting %s input value = %s", label, value));
         WebElement inputElement = driver.findElement(By.xpath(String.format(INPUT_LOCATOR, label)));
         if (Objects.nonNull(value)) {
             scrollIntoView(inputElement);
-            System.out.printf("Setting %s input value = %s", label, value);
-            System.out.println();
             inputElement.sendKeys(value);
         }
     }
